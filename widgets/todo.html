@@ -11,7 +11,7 @@
     <ul>
         <template x-for="todo in todos" :key="todo.id">
             <li :class="{ 'completed': todo.completed }">
-                <input type="checkbox" x-model="todo.completed">
+                <input type="checkbox" x-model="todo.completed">d
                 <span x-text="todo.text"></span>
                 <button @click="remove(todo.id)">x</button>
             </li>

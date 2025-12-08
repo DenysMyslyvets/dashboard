@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div class="widget">
+    <h2 id="clock">00:00:00</h2>
+</div>
+
+<script>
+(function() {
+    const clockEl = document.getElementById('clock');
+
+    function updateClock() {
+        const now = new Date();
+        const h = String(now.getHours()).padStart(2,'0');
+        const m = String(now.getMinutes()).padStart(2,'0');
+        const s = String(now.getSeconds()).padStart(2,'0');
+        clockEl.textContent = `${h}:${m}:${s}`;
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+})();
+</script>
+
+<style>
+body {
+    background: #f2f2f2;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.widget {
+    background: white;
+    padding: 20px 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+#clock {
+    font-size: 50px;
+    color: purple;
+    font-family: 'Courier New', monospace;
+}
+</style>
+
+</body>
+</html>

@@ -45,3 +45,5 @@ body {
 .widget.third {
   grid-column: span 3; /* Polovina šířky - 6 sloupců */
 }
+
+/*/

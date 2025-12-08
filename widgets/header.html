@@ -1,34 +1,33 @@
-<div class="header">
-    <h2 id="greeting"></h2>
+<!DOCTYPE html>
+<html>
+<body>
+
+<div class="widget">
+    <h2 id="greeting">Ahoj, Student!</h2>
 </div>
 
-<script>
-(function () {
-    const student = 'Student';
-    const greetingEl = document.getElementById('greeting');
-
-    function updateGreeting() {
-        const hour = new Date().getHours();
-        let msg = '';
-
-        if (hour < 12) {
-            msg = 'Dobré ráno';
-        } else if (hour < 18) {
-            msg = 'Dobré odpoledne';
-        } else {
-            msg = 'Dobré večer';
-        }
-
-        greetingEl.textContent = `${msg}, ${student}!`;
-    }
-
-    updateGreeting();
-})();
-</script>
-
 <style>
+body {
+    background: #f2f2f2;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.widget {
+    background: white;
+    padding: 20px 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
 #greeting {
     font-size: 50px;
-    color: purple;
+    color: green;
 }
 </style>
+
+</body>
+</html>
