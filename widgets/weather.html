@@ -50,7 +50,7 @@ body {
 <div class="weather-widget">
     <div class="city" id="weather-city">Loading...</div>
     <div class="temp" id="weather-temp">--°C</div>
-    <div class="desc" id="weather-desc">---</div>
+    <div class="desc" id="weather-desc">Zlín</div>
 </div>
 
 <script>
@@ -84,7 +84,7 @@ body {
     fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${long}&localityLanguage=cs`)
         .then(r => r.json())
         .then(data => {
-            cityEl.textContent = data.city || data.locality || '---';
+            cityEl.textContent = data.city || data.locality || 'Zlín';
         });
 })();
 </script>
