@@ -1,0 +1,92 @@
+<div class="currency-widget" x-data="multiCurrencyWidget()">
+  <h3>Konvertor měny</h3>
+
+  <div class="input-group">
+    <input type="number" x-model.number="amountFrom" @input="convert()" placeholder="Částka">
+    <select x-model="currencyFrom" @change="convert()">
+      <template x-for="curr in currencies" :key="curr">
+        <option x-text="curr"></option>
+      </template>
+    </select>
+  </div>
+
+  <div class="input-group">
+    <input type="number" x-model.number="amountTo" disabled placeholder="Výsledek">
+    <select x-model="currencyTo" @change="convert()">
+      <template x-for="curr in currencies" :key="curr">
+        <option x-text="curr"></option>
+      </template>
+    </select>
+  </div>
+</div>
+
+<script>
+function multiCurrencyWidget() {
+  return {
+    currencies: ['CZK','EUR','USD','GBP','JPY','AUD','CAD','CHF','CNY','SEK','NOK','NZD','PLN','HUF','MXN'],
+    currencyFrom: 'CZK',
+    currencyTo: 'EUR',
+    amountFrom: '',
+    amountTo: '',
+    rates: {
+      'EUR': 1, 'CZK': 24.5, 'USD': 1.08, 'GBP': 0.87, 'JPY': 145.3, 
+      'AUD': 1.67, 'CAD': 1.45, 'CHF': 0.99, 'CNY': 7.75, 'SEK': 11.5, 
+      'NOK': 11.8, 'NZD': 1.75, 'PLN': 4.65, 'HUF': 410.0, 'MXN': 21.5
+    },
+    convert() {
+      if (this.amountFrom === '' || isNaN(this.amountFrom)) {
+        this.amountTo = '';
+        return;
+      }
+      const inEUR = this.amountFrom / this.rates[this.currencyFrom];
+      this.amountTo = (inEUR * this.rates[this.currencyTo]).toFixed(2);
+    }
+  }
+}
+</script>
+
+<style>
+.currency-widget {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  max-width: 320px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  margin: 20px auto;
+}
+
+.currency-widget h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.input-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.input-group input {
+  width: 120px;
+  padding: 8px;
+  font-size: 16px;
+  text-align: right;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.input-group select {
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  cursor: pointer;
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
