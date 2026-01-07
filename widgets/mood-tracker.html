@@ -1,0 +1,109 @@
+<div class="mood-widget" x-data="moodTracker()" x-init="init()">
+    <h3>Mood Tracker</h3>
+
+    <label for="mood-date">Vyber datum:</label>
+    <input type="date" id="mood-date" x-model="selectedDate">
+
+    <p>Jak se dnes cítíš?</p>
+    <div class="emojis">
+        <button type="button" :class="{active: selectedMood==='😄'}" @click="setMood('😄')">😄</button>
+        <button type="button" :class="{active: selectedMood==='🙂'}" @click="setMood('🙂')">🙂</button>
+        <button type="button" :class="{active: selectedMood==='😐'}" @click="setMood('😐')">😐</button>
+        <button type="button" :class="{active: selectedMood==='😕'}" @click="setMood('😕')">😕</button>
+        <button type="button" :class="{active: selectedMood==='😡'}" @click="setMood('😡')">😡</button>
+    </div>
+
+    <h4>Historie</h4>
+    <ul>
+        <template x-for="entry in history" :key="entry.date + entry.mood">
+            <li><span x-text="entry.date"></span>: <span x-text="entry.mood"></span></li>
+        </template>
+    </ul>
+</div>
+
+<script>
+function moodTracker() {
+    return {
+        selectedDate: new Date().toISOString().substr(0,10),
+        selectedMood: '',
+        history: [],
+
+        init() {
+            this.history = JSON.parse(localStorage.getItem('moodHistory') || '[]');
+            const todayEntry = this.history.find(e => e.date === this.selectedDate);
+            if(todayEntry) this.selectedMood = todayEntry.mood;
+        },
+
+        setMood(mood) {
+            this.selectedMood = mood;
+
+            // если запись с этой датой уже есть — обновляем, иначе добавляем
+            const idx = this.history.findIndex(e => e.date === this.selectedDate);
+            if(idx !== -1) {
+                this.history[idx].mood = mood;
+            } else {
+                this.history.push({date: this.selectedDate, mood});
+            }
+
+            localStorage.setItem('moodHistory', JSON.stringify(this.history));
+        }
+    }
+}
+</script>
+
+<style>
+.mood-widget {
+    background: #fff3e0;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    width: 280px;
+    font-family: Arial, sans-serif;
+}
+
+.mood-widget h3, .mood-widget h4 {
+    margin: 5px 0;
+    text-align: center;
+}
+
+.mood-widget input[type="date"] {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.emojis {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.emojis button {
+    font-size: 24px;
+    background: transparent;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 40px;
+    height: 40px;
+}
+
+.emojis button.active {
+    background: #ffecb3;
+    border-color: #ffb74d;
+}
+
+.emojis button:hover {
+    background: #ffe0b2;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    font-size: 14px;
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
